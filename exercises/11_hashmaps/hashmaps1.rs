@@ -12,7 +12,6 @@
 // hint.
 
 use std::collections::HashMap;
-use std::simd::i32x1;
 
 fn fruit_basket() -> HashMap<String, u32> {
     let mut basket = HashMap::<String, u32>::new();

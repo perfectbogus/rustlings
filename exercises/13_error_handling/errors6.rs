@@ -21,17 +21,20 @@ enum ParsePosNonzeroError {
 }
 
 impl ParsePosNonzeroError {
-    fn from_creation(err: CreationError) -> ParsePosNonzeroError {
-        ParsePosNonzeroError::Creation(err)
+    fn from_creation(err: CreationError) -> Self {
+        Self::Creation(err)
     }
     // TODO: add another error conversion function here.
     // fn from_parseint...
+    fn from_parse_int(err: ParseIntError) -> Self {
+        Self::ParseInt(err)
+    }
 }
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
     // TODO: change this to return an appropriate error instead of panicking
     // when `parse()` returns an error.
-    let x: i64 = s.parse().unwrap();
+    let x = s.parse().map_err(ParsePosNonzeroError::from_parse_int)?;
     PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
 }
 
